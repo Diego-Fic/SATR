@@ -14,9 +14,9 @@ La aplicación emplea las siguiente librerias:
 # Prerequisitos y Instalación
 
 Antes de instalar y probar la aplicación necesitamos realizar una serie de tareas:
-* Debemos descargar la aplicación del repositorio ($git clone https://github.com/Diego-Fic/SATR.git) 
+* Debemos descargar la aplicación del repositorio ($git clone https://github.com/Diego-Fic/SATR.git). 
 * A continuación debemos instalar las dependencias de Licode localizadas en STAR/Dependencies.
-  Debemos arrancar ./installUbuntuDepsh
+* Debemos arrancar ./installUbuntuDepsh
 
 
 Una vez hemos instalado las dependecias podemos ejecutar nuestra aplicación:
