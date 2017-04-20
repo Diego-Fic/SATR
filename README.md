@@ -14,10 +14,9 @@ La aplicación emplea las siguiente librerias:
 # Prerequisitos y Instalación
 
 Antes de instalar y probar la aplicación necesitamos realizar una serie de tareas:
-* Debemos descargar la aplicación del repositorio ($git clone https://github.com/Diego-Fic/SATR.git). 
-* A continuación debemos instalar las dependencias de Licode localizadas en STAR/Dependencies.
-* Debemos arrancar ./installUbuntuDepsh
-
+* Debemos descargar la aplicación del repositorio ($git clone https://github.com/Diego-Fic/SATR.git) y instalar las dependencias mediante $npm init. 
+* A continuación debemos descargar Licode($ git clone https://github.com/ging/licode.git) y instalar las dependencias de Licode localizadas en licode/scripts.
+* Debemos arrancar ./installUbuntuDepsh, seguido de ./installErizo.sh y de ./installNuve.sh.
 
 Una vez hemos instalado las dependecias podemos ejecutar nuestra aplicación:
 * Ejecutamos node app.js
