@@ -1,0 +1,15 @@
+Para conectarnos por terminal empleamos mongo.
+$show dbs nos permite ver las bases de datos.
+$use nombre para crear una base de datos y nos coloca en esa base de datos.
+$db.nombre_coleccion
+
+$db.createUser({
+	user:"Diego",
+	pwd:"1234",
+	roles:[ "readWrite", "dbAdmin" ]
+});
+
+db.createCollection('Clientes');
+db.createCollection('Habitaciones');
+
+

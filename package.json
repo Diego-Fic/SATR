@@ -1,0 +1,25 @@
+{
+  "name": "satr",
+  "version": "1.0.0",
+  "description": "Proyecto de Fin de Carrera TIC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Diego-Fic/SATR/"
+  },
+  "author": {
+    "name": "Diego Otero González",
+    "email": "diegoderus@gmail.com"
+  },
+  "license": "ISC",
+  "engines": {
+    "node": "6.10.0",
+    "npm": "3.10.10"
+  },
+  "dependencies": {
+    "express": "4.15.2",
+    "jade": "1.11.0",
+    "mongodb": "2.2.26",
+    "mongoose": "4.9.5"
+  }
+}

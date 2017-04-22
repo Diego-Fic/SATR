@@ -1,0 +1,12 @@
+show dbs
+
+use Aplicacion
+
+db.createUser({
+	user:"Diego",
+	pwd:"1234",
+	roles:[ "readWrite", "dbAdmin" ]
+});
+
+db.createCollection('Clientes');
+db.createCollection('Habitaciones');
