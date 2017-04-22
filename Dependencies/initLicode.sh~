@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PIROOT=`pwd`/SATR
-LIROOT=`pwd`/licode
+LIROOT=`pwd`licode
 ROOT=`pwd`/licode
 BUILD_DIR=$ROOT/build
 CURRENT_DIR=`pwd`
