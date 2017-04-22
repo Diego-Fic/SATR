@@ -1,4 +1,9 @@
 /node_modules
-/MongodB
-/erizo.ja
-/nuve.js
+erizo.js~
+nuve.js~
+erizo.js~
+nuve.js~
+app.js~
+package.json~
+.gitignore~
+README.md~
