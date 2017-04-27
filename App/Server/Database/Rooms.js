@@ -7,4 +7,4 @@ var roomsSchema = new Schema({
    max: { type: Number}
 });
 
-module.exports = mongoose.model('Rooms', clientsSchema);
+module.exports = mongoose.model('Rooms', roomsSchema);

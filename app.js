@@ -14,7 +14,7 @@ var express = require('express'),
     path = require("path");
     moment = require('moment');
     sprintf = require('sprintf-js');
-
+    mongoose = require('mongoose');
 
 /*Configuración estandar*/
 app.locals.title = 'SATR';
@@ -36,12 +36,20 @@ app.use(methodOverride());
 app.use(stylus.middleware({ src:path.join(__dirname, '/App/Public')}));
 app.use(express.static(path.join(__dirname, '/App/Public')));
 
+/*Conexión con la Base de Datos*/
+mongoose.connect('mongodb://localhost/Aplicacion', function(err, res){
+  if(err){
+    console.log('ERROR: Conectando a la Base de Datos'+ err);
+  }
+});
+require('./App/Server/Database/Users')(app);
+require('./App/Server/Database/Rooms')(app);
 /*Rutas*/
 require('./App/Server/Routing/Gestion_Usuarios')(app);
 //require('./App/Server/')(app);
 
-app.get('*',function(req,res)
-{res.render('default')});
+app.get('*',function(req,res){res.render('default')});
+
 /*Servidor*/
 var server = http.createServer(
 	app).listen(app.get('port'),function(){
