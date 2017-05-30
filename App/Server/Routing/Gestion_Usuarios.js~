@@ -1,0 +1,40 @@
+var N = require('./../../../nuve');
+var Administrar = require('../Database/Users_Management');
+
+module.exports = function(app){
+
+   app.get('/',function(req, res){
+      if (req.cookies.username == undefined || req.cookies.password == undefined){
+         res.render('login'); 
+	} else {
+		if(req.cookies.rol == 'Admin'){res.redirect('/admin');}
+		else if(req.cookies.rol == 'Support'){res.redirect('/support')}
+		else {res.render('login');}
+	}
+   });
+
+   app.post('/',function(req, res){
+      Administrar.Login(req.body.username, req.body.password, function(response){
+        if(response){
+           res.cookie('username',response.name);
+           res.cookie('password',response.passwd);
+           res.cookie('rol',response.rol);
+         }
+	res.redirect('/');
+      });
+	console.log(req.params.recuerdame);
+   });
+
+   app.get('/logout',function(req, res){
+           res.clearCookie('username');
+           res.clearCookie('password');
+           res.clearCookie('rol');
+           res.redirect('/');
+   });
+};
+
+
+      //Administrar.findAllUsers(function(response){
+      //   console.log(response);
+      //});      
+      //console.log(req.cookies.username);

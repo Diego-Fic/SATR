@@ -1,0 +1,23 @@
+extends layout
+
+block contenido
+  form(method='POST')
+    legend Crear Usuario
+    .form-group
+      label(for='confirm') Username
+      input.form-control(type='text', name='username', value='')    
+    .form-group
+      label(for='password') Email
+      input.form-control(type='text', name='email', value='', autofocus=true)
+    .form-group
+      label(for='confirm') Password
+      input.form-control(type='password', name='password', value='')
+    .form-group
+      label(for='confirm') Rol
+      input.form-control(type='text', name='rol', value='')            
+    .form-group
+      button.btn.btn-primary(type='submit') Create
+    div
+      select.selectpicker.form-control(name='takeRol')
+        option(value=Suppot) Support
+        option(value=Admin) Admin  

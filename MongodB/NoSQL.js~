@@ -1,0 +1,18 @@
+show dbs
+
+use Aplicacion
+
+db.createCollection('Users',
+  { validator: { $or:
+    [
+        {name: { $type: String} },
+        {passwd: { $type: Number} },
+        {rol: { $in: ['Admin','Support','Client']} }
+    ]
+  }
+});
+
+db.Users.save({name: 'Diego', passwd: 1234, rol: 'Admin'});
+db.Users.save({name: 'Samuel', passwd: 1234, rol: 'Support'});
+
+db.createCollection('Rooms');

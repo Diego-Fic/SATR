@@ -1,0 +1,12 @@
+doctype html
+html(lang="es")
+  block sesion
+  head
+        title SATR
+        meta(charset="utf-8")
+        link(rel='stylesheet', href='/css/bootstrap-bits.css')
+        link(rel='stylesheet', href='/css/style.css')  
+  body
+        block contenido
+        script(src='/js/bootstrap.min.js')
+        block scripts

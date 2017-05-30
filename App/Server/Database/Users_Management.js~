@@ -1,0 +1,15 @@
+var mongoose = require('mongoose');
+var Users = mongoose.model('Users');
+
+exports.findAllUsers = function(response){
+       Users.find(function(err, users){
+       response(users);
+       if(err) res.send(500, err.message);
+       });
+};
+
+exports.Login = function(name, passwd, response){
+      Users.findOne({name:name, passwd: passwd}, function(error, result){
+         response(result);
+      });  
+};
