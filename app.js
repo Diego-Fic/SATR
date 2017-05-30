@@ -15,6 +15,7 @@ var express = require('express'),
     moment = require('moment');
     sprintf = require('sprintf-js');
     mongoose = require('mongoose');
+    flash = require('express-flash');
 
 /*Configuración estandar*/
 app.locals.title = 'SATR';
@@ -32,11 +33,13 @@ app.use(cookieParser());
 app.use(session({
 	resave: true, saveUninitialized: true ,secret:'secret-seed'
 }));
+app.use(flash());
 app.use(methodOverride());
 app.use(stylus.middleware({ src:path.join(__dirname, '/App/Public')}));
 app.use(express.static(path.join(__dirname, '/App/Public')));
 
 /*Conexión con la Base de Datos*/
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Aplicacion', function(err, res){
   if(err){
     console.log('ERROR: Conectando a la Base de Datos'+ err);
@@ -44,6 +47,8 @@ mongoose.connect('mongodb://localhost/Aplicacion', function(err, res){
 });
 require('./App/Server/Database/Users')(app);
 require('./App/Server/Database/Rooms')(app);
+
+
 /*Rutas*/
 require('./App/Server/Routing/Gestion_Usuarios')(app);
 //require('./App/Server/')(app);
@@ -53,5 +58,5 @@ app.get('*',function(req,res){res.render('default')});
 /*Servidor*/
 var server = http.createServer(
 	app).listen(app.get('port'),function(){
-	console.log("EL servido esta escuchando en el puerto: " + app.get('port'));
+	console.log("El servidor esta escuchando en el puerto: " + app.get('port'));
 });

@@ -1,15 +1,17 @@
 extends layout
 
 block contenido
-      h1 Hola,Bienvenido al Servicio Técnico
-      form( method="post")
-          p.subheading LOGIN
-          div 
-              label Usuario
-              input(type="text", name="username")
-          div
-              label Contraseña
-              input(type="password", name"password")
-          button(type="submit") Iniciar Sesión
-          div
-              a(href='/recover-password') Olvidaste la contraseña o usuario? 
+  form(method='POST')
+    legend Login
+    .form-group
+      label(for='username') Email
+      input.form-control(type='text', name='email', autofocus)
+    .form-group
+      label(for='password') Password
+      input.form-control(type='password', name='password')
+    button.btn.btn-primary(type='submit') Login
+    a.btn.btn-link(href='/recover-password') Forgot Password?
+    .checkbox
+      label
+        input(type='checkbox',name='recuerdame', value='condition')
+        | Remember me  

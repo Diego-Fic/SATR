@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PIPROOT=`pwd`/SATR
+APPROOT=`pwd`/SATR
 LICODEROOT=`pwd`/licode
 ROOT=`pwd`/licode
 BUILD_DIR=$ROOT/build

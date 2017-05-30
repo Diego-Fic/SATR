@@ -19,13 +19,16 @@
   "dependencies": {
     "body-parser": "1.17.1",
     "cookie-parser": "1.4.3",
+    "crypto": "0.0.3",
     "express": "4.15.2",
+    "express-flash": "0.0.2",
     "express-session": "1.15.2",
     "jade": "1.11.0",
     "method-override": "2.3.8",
     "moment": "2.18.1",
     "mongodb": "2.2.26",
     "mongoose": "4.9.5",
+    "nodemailer": "^4.0.1",
     "sprintf-js": "1.0.3",
     "stylus": "0.54.5"
   }
