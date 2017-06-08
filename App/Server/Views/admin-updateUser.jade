@@ -1,0 +1,24 @@
+extends layout
+block variables
+  -var Usuario = user;
+
+block contenido
+  .update-container
+    form(method='POST')
+      legend Update User
+      .form-group
+        label(for='confirm') Username: #{Usuario.username}
+        input.form-control(type='text', name='username')    
+      .form-group
+        label(for='password') Email: #{Usuario.email}
+        input.form-control(type='text', name='email', autofocus=true)
+      .form-group
+        label(for='confirm') Password: #{Usuario.password}
+        input.form-control(type='password', name='password')
+      .form-group
+        label(for='confirm') Rol: #{Usuario.rol}
+        select.selectpicker.form-control(name='takeRol')
+          option(value=Suppot) Support
+          option(value=Admin) Admin            
+      .form-group
+        button.btn.btn-primary(type='submit') Update 

@@ -1,0 +1,47 @@
+    /*CSS TEMPLATE LOGIN.JADE*/
+    .login-container{
+      margin: auto;
+      width: 40%;
+    }
+    input[type='checkbox']{
+    	margin-top: 2px;
+    	position: absolute;
+    	width: 210px;
+    }
+    /*CSS TEMPLATE RECOVER-PASSWORD.JADE*/
+    .recover-container{
+      margin: auto;
+      width: 40%;
+      margin-top: 50px;
+    }     
+    /*CSS TEMPLATE CHANGE-PASSWORD.JADE*/
+    .change-container{
+      margin: auto;
+      width: 40%;
+      margin-top: 20px;
+      margin: 10px;
+    } 
+    /*CSS TEMPLATE ADMIN-USERS.JADE*/
+    .admin-container{
+      margin: auto;
+      width: 75%;
+      height: 350px;
+      overflow: auto;
+      margin-top: 10px;
+    }       
+    #edit-user , #delete-user{
+      margin-right: 5px;
+    }
+    #create-user{
+      margin: auto;
+      position:relative;
+
+    }
+    /*CSS TEMPLATE ADMIN-UPDATEUSER.JADE*/
+    .update-container{
+      margin: auto;
+      width: 65%;
+    }
+
+
+

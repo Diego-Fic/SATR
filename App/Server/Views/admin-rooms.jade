@@ -1,0 +1,33 @@
+extends layout
+
+block subcontenido
+
+	a(href='/admin/rooms/create-rooms')
+					button#create-room(type='submit') Create Room
+block contenido
+	.admin-container
+		h1 Room List
+		div.admin
+			table.table.table-bordered.table-stripped
+				thead
+
+					tr
+						th Romm ID
+						th Name
+						th Limit Room
+						th Delete Room
+						th Update Room
+
+				tbody
+					if (lista.length !==0)
+						each room in lista
+								tr						
+								td #{room.id}
+								td #{room.name}
+								td #{room.max}
+								td
+									form(action='/admin/rooms/delete/#{room.name}',method='post')
+										button#delete-room(type='submit') Delete
+								td 
+									a(href='/admin/room/edit/#{room.name}')
+										button#edit-room(type='submit') Edit

@@ -2,15 +2,3 @@ extends layout
 
 block contenido
 
-	h1 Users
-	
-	ul
-		- each users, i in lista
-			li
-				= 'USERNAME: ' + users.username + '     '
-				= 'EMAIL: ' + users.email + '     '
-				= 'ROL: ' + users.rol
-			form(action='/admin/users/delete/#{users.email}',method='post')
-				button(type='submit') Delete						
-			a(href='/admin/users/#{users.email}/edit')
-				button(type='submit') Edit

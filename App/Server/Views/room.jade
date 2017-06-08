@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title Licode Basic Example
+    script(type='text/javascript', src='erizo.js')
+    script(type='text/javascript', src='script.js')
+  body
+    button#recordButton(onclick='startRecording()', disabled='') Toggle Recording
+    button#testConnection(onclick='testConnection()') Test Connection
+    button#slideShowMode(onclick='toggleSlideShowMode()') Toggle Slide Show Mode
+    #myVideo(style='width:320px; height: 240px;')

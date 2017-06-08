@@ -20,10 +20,9 @@ exports.createUser = function(username,email,password,rol,response){
     	if (err) {
     		response(null);
     		console.log(err);
-    	}
-    	else {
+    	} else {
     		response(user);
-    	}
+    	};
 
     });
 };

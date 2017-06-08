@@ -1,23 +1,34 @@
 extends layout
 
+block subcontenido
+
+	a(href='/admin/users/create-users')
+					button#create-user(type='submit') Create User
 block contenido
-  form(method='POST')
-    legend Crear Usuario
-    .form-group
-      label(for='confirm') Username
-      input.form-control(type='text', name='username', value='')    
-    .form-group
-      label(for='password') Email
-      input.form-control(type='text', name='email', value='', autofocus=true)
-    .form-group
-      label(for='confirm') Password
-      input.form-control(type='password', name='password', value='')
-    .form-group
-      label(for='confirm') Rol
-      input.form-control(type='text', name='rol', value='')            
-    .form-group
-      button.btn.btn-primary(type='submit') Create
-    div
-      select.selectpicker.form-control(name='takeRol')
-        option(value=Suppot) Support
-        option(value=Admin) Admin  
+	.admin-container
+		h1 Users List
+		div.admin
+			table.table.table-bordered.table-stripped
+				thead
+
+					tr
+						th Username
+						th Email
+						th Rol
+						th Delete User
+						th Update User
+
+				tbody
+					if (lista.length !==0)
+						each usuario in lista
+								tr 						
+								td #{usuario.username}
+								td #{usuario.email}
+								td #{usuario.rol}
+								td
+									form(action='/admin/users/delete/#{usuario.email}',method='post')
+										button#delete-user(type='submit') Delete
+								td 
+									a(href='/admin/users/edit/#{usuario.email}')
+										button#edit-user(type='submit') Edit
+									

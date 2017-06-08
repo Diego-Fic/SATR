@@ -1,0 +1,13 @@
+extends layout
+
+block contenido
+  form(method='POST')
+    legend Create Room
+    .form-group
+      label(for='confirm') Name(Enter Email of Employee)
+      input.form-control(type='text', name='name')    
+    .form-group
+      label(for='password') Romm Limit
+      input.form-control(type='text', name='limit', autofocus=true)          
+    .form-group
+      button.btn.btn-primary(type='submit') Create 

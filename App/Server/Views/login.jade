@@ -1,17 +1,19 @@
 extends layout
 
 block contenido
-  form(method='POST')
-    legend Login
-    .form-group
-      label(for='username') Email
-      input.form-control(type='text', name='email', autofocus)
-    .form-group
-      label(for='password') Password
-      input.form-control(type='password', name='password')
-    button.btn.btn-primary(type='submit') Login
-    a.btn.btn-link(href='/recover-password') Forgot Password?
-    .checkbox
-      label
-        input(type='checkbox',name='recuerdame', value='condition')
-        | Remember me  
+  .login-container
+    form(method='POST')
+      legend Login
+      .form-group
+        label(for='username') Email
+        input.form-control(type='text', name='email')
+      .form-group
+        label(for='password') Password
+        input.form-control(type='password', name='password')
+      button.btn.btn-primary(type='submit') Login
+      a.btn.btn-link(href='/recover-password') Forgot Password?        
+    div-checkbox
+      input(type='checkbox', name='recuerdame', value='condition') 
+      |  Remember me
+    
+         
