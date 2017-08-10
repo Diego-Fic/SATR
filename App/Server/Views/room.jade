@@ -1,11 +1,24 @@
-doctype html
 html
   head
-    title Licode Basic Example
-    script(type='text/javascript', src='erizo.js')
-    script(type='text/javascript', src='script.js')
+    title SATR
+    meta(charset='UTF-8')
+    meta(name='token', content='{{token}}')
+    meta(name='client', content='{{client}}')
+    meta(name='support', content='{{support}}')
+    meta(name='rol', content='{{rol}}')
+    script(src='/js/jquery.min.js')  
+    script(src='/js/erizo.js')
+    script(src='/js/room.js')
+    link(rel='stylesheet', href='/css/room.css')
   body
-    button#recordButton(onclick='startRecording()', disabled='') Toggle Recording
-    button#testConnection(onclick='testConnection()') Test Connection
-    button#slideShowMode(onclick='toggleSlideShowMode()') Toggle Slide Show Mode
-    #myVideo(style='width:320px; height: 240px;')
+    #main
+      #d-right
+        #video-teacher
+        #video-teacher2
+        #wrapper
+          #chatbox
+          form#message
+            input#usermsg(name='usermsg', type='text', size='63')
+            input#submitmsg(name='submitmsg', type='submit', value='Send')
+      #screen-teacher
+    button Salir

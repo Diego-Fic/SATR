@@ -1,21 +1,77 @@
-extends layout
+doctype html
+html(lang='en')
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='/css/bootstrap.min.css')
+    title Create User
+    style.
+      .espacio{
+      margin-top:30px;
+      }     
+  body
+    .navbar.navbar-inverse.navbar-static-top(role='navigation')
+        .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='/') SATR
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.active
+              if user
+                li              
+                  if user.rol == 'Admin'              
+                    li
+                      a(href='/admin/users') Users
+                    li
+                      a(href='/admin/rooms') Rooms                
+                    li
+                      a(href='/logout') Logout
+                  else 
+                    if user.rol == 'Support'
+                      li
+                        a(href='/support/rooms') Rooms               
+                      li
+                        a(href='/logout') Logout                  
+    
+    .container
+      if messages.error
+        .alert.alert-danger
+          div= messages.error
+      if messages.info
+        .alert.alert-info
+          div= messages.info
+      if messages.success
+        .alert.alert-success
+          div= messages.success
 
-block contenido
-  form(method='POST')
-    legend Create User
-    .form-group
-      label(for='confirm') Username
-      input.form-control(type='text', name='username')    
-    .form-group
-      label(for='password') Email
-      input.form-control(type='text', name='email', autofocus=true)
-    .form-group
-      label(for='confirm') Password
-      input.form-control(type='password', name='password')
-    .form-group
-      label(for='confirm') Rol
-      select.selectpicker.form-control(name='takeRol')
-        option(value=Suppot) Support
-        option(value=Admin) Admin            
-    .form-group
-      button.btn.btn-primary(type='submit') Create 
+    .container 
+      .espacio
+        form.form-horizontal(method='POST')
+          fieldset
+            legend Create User
+            .form-group
+              label.col-md-4.control-label(for='confirm') Username
+              .col-md-4
+                input.form-control.input-md(name='username', type='text')
+            .form-group
+              label.col-md-4.control-label(for='confirm') Email
+              .col-md-4
+                input.form-control.input-md(name='email', type='text')             
+            .form-group
+              label.col-md-4.control-label(for='confirm') Password
+              .col-md-4
+                input.form-control.input-md(name='password',type='password')                               
+            .form-group
+              label.col-md-4.control-label(for='confirm') Rol
+              .col-md-4
+                select.form-control(name='takeRol')
+                  option(value=Suppot) Support
+                  option(value=Admin) Admin
+            .form-group
+              label.col-md-4.control-label(for='confirm')
+              .col-md-4
+                button.btn.btn-primary(type='submit') Create 

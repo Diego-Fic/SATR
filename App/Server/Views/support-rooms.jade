@@ -1,0 +1,136 @@
+doctype html
+html(lang='en')
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='/css/bootstrap.min.css')
+    script(src='/js/jquery.min.js')
+    title Admin Room  
+    style.
+      #create{
+      margin-bottom:20px;
+      } 
+      .well{
+      overflow:auto;
+      height: 310px;
+      width: 100%;
+      }
+  body
+    .navbar.navbar-inverse.navbar-static-top(role='navigation')
+        .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='/') SATR
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.active
+              if user
+                li              
+                  if user.rol == 'Admin'              
+                    li
+                      a(href='/admin/users') Users
+                    li
+                      a(href='/admin/rooms') Rooms                
+                    li
+                      a(href='/logout') Logout
+                  else 
+                    if user.rol == 'Support'
+                      li
+                        a(href='/support/rooms') Rooms               
+                      li
+                        a(href='/logout') Logout 
+    .container
+      if messages.error
+        .alert.alert-danger
+          div= messages.error
+      if messages.info
+        .alert.alert-info
+          div= messages.info
+      if messages.success
+        .alert.alert-success
+          div= messages.success    
+
+  .container                                         
+    .btn-toolbar
+    a(href='/support/rooms/create-rooms')
+      button#create.btn.btn-primary New Room
+    .well
+      table.table#myTable
+        thead
+          tr
+            th(onclick='sortTable(0)') Romm ID
+            th(onclick='sortTable(1)') Name
+            th(onclick='sortTable(2)') Destination Room             
+            th(style='width: 30px;')
+        tbody
+           if (lista.length !==0)
+                each room in lista
+                    tr
+                        td #{room.id}
+                        td #{room.name}
+                        td #{room.destination}
+                        td 
+                            a(href='/room/#{room.id}')
+                                span.glyphicon.glyphicon-globe
+                        td
+                            a(href='/support/rooms/edit/#{room.name}')
+                                span.glyphicon.glyphicon-pencil
+                        td
+                            form(action='/support/rooms/delete/#{room.name}',method='post')
+                                button(type='submit')
+                                    span.glyphicon.glyphicon-remove 
+
+             
+
+  script.
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        //Set the sorting direction to ascending:
+        dir = "asc";
+        /*Make a loop that will continue until no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /*Loop through all table rows (except the first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /*check if the two rows should switch place,based on the direction, asc or desc:*/
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch= true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch= true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            /*If a switch has been marked, make the switch and mark that a switch has been done:*/
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            //Each time a switch is done, increase this count by 1:
+            switchcount ++;
+        } else {
+            /*If no switching has been done AND the direction is "asc",set the direction to "desc" and run the while loop again.*/
+            if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+            }
+        }
+        }
+    }		

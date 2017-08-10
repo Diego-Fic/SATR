@@ -1,8 +1,25 @@
-extends layout
-
-block contenido 
-        .container
-                h1 URL No Valida
-        .content-block
-                p La url que has indicado no es correcta o has sido redirigido a un sitio equivocado.
-                a.btn(href='/') Volver a la página principal
+doctype html
+html
+  head
+    title 404 NOT FOUND
+    link(href='css/style.css', rel='stylesheet', type='text/css', media='all')
+  body
+    // start-wrap-
+    .wrap
+      // -start-header--
+      .header
+        .logo
+          h1
+            a(href='#') Ohh
+      // -End-header--
+      // start-content----
+      .content
+        img(src='images/error-img.png', title='error')
+        p
+          span
+            label O
+            | hh.....
+          | You Requested the page that is no longer There.
+        a(href='/') Back To Home
+      // End-Cotent----
+    // End-wrap-

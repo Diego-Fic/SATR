@@ -1,19 +1,64 @@
-extends layout
+doctype html
+html(lang="es")
+  head
+    meta(charset='utf-8')
+    title Login
+    link(rel='stylesheet', href='css/bootstrap.min.css')  
+    script(src='js/bootstrap.min.js')       
+    script(src='js/jquery.min.js')
+    link(rel="stylesheet", href="css/reset.css")
+    link(rel="stylesheet", href="css/animate.css")
+    link(rel='stylesheet', href='css/login.css')
+  body
+    .navbar.navbar-inverse.navbar-static-top(role='navigation')
+          .container
+            .navbar-header
+              button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.navbar-brand(href='/') SATR
+            .collapse.navbar-collapse
+              ul.nav.navbar-nav
+                li.active
+                if user
+                  li              
+                    if user.rol == 'Admin'              
+                      li
+                        a(href='/admin/users') Users
+                      li
+                        a(href='/admin/rooms') Rooms                
+                      li
+                        a(href='/logout') Logout
+                    else 
+                      if user.rol == 'Support'
+                        li
+                          a(href='/support/rooms') Rooms               
+                        li
+                          a(href='/logout') Logout                  
+    .login-container
+        if messages.error
+          .alert.alert-danger
+            div= messages.error
+        if messages.info
+          .alert.alert-info
+            div= messages.info
+        if messages.success
+          .alert.alert-success
+            div= messages.success
 
-block contenido
-  .login-container
-    form(method='POST')
-      legend Login
-      .form-group
-        label(for='username') Email
-        input.form-control(type='text', name='email')
-      .form-group
-        label(for='password') Password
-        input.form-control(type='password', name='password')
-      button.btn.btn-primary(type='submit') Login
-      a.btn.btn-link(href='/recover-password') Forgot Password?        
-    div-checkbox
-      input(type='checkbox', name='recuerdame', value='condition') 
-      |  Remember me
-    
+    #container
+      form(method='POST')
+        label(for='email') Email:
+        input(type='name', name='email')
+        label(for='password') Password:
+        p
+          a(href='/recover-password') Forgot your password?
+          input(type='password',name='password')
+          #lower
+            input(type='checkbox', name='recuerdame', value='condition')
+            label.check(for='checkbox') Keep me logged in
+            button(type='submit') Login
+
          

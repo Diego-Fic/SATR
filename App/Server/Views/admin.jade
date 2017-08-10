@@ -1,4 +1,74 @@
-extends layout
+doctype html
+html
+  head
+    meta(http-equiv='Content-type', content='text/html; charset=utf-8')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')  
+    script(src='/js/bootstrap.min.js')       
+    script(src='/js/jquery.min.js')
+    script(src='/css/codebase/dhtmlxscheduler.js', type='text/javascript', charset='utf-8')
+    link(rel='stylesheet', href='/css/codebase/dhtmlxscheduler.css', type='text/css', media='screen', title='no title', charset='utf-8')
+    style(type='text/css', media='screen').
+      html, body{
+      margin:0px;
+      padding:0px;
+      height:100%;
+      overflow:auto;
+      }
+  script(type='text/javascript', charset='utf-8').
+    function init() {
+    scheduler.init('scheduler_here',new Date(),"month");
+    
+    var conferences =!{JSON.stringify(lista)};
+    scheduler.parse(conferences,'json');  
+    var dp = new dataProcessor("/admin/calendar/:toke");
+    dp.init(scheduler);
+    dp.setTransactionMode("POST",false);
+    }
+  body(onload='init();')
+    .navbar.navbar-inverse.navbar-static-top(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') SATR
+        .collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+            if user
+              li              
+                if user.rol == 'Admin'              
+                  li
+                    a(href='/admin/users') Users
+                  li
+                    a(href='/admin/rooms') Rooms                
+                  li
+                    a(href='/logout') Logout
+                else 
+                  if user.rol == 'Support'
+                    li
+                      a(href='/support/rooms') Rooms               
+                    li
+                      a(href='/logout') Logout                  
 
-block contenido
+    .span12
+      label.col-md-4.control-label(for='textinput') Employee: #{empleado}
+      form.form-search.form-horizontal.pull-right(method='POST')
+        .input-append.span12
+          input.search-query.mac-style(type='text', name='Search', placeholder='Search')
+          button.btn(type='submit')
+            span.glyphicon.glyphicon-search
 
+    #scheduler_here.dhx_cal_container(style='width:100%; height:80%;')
+      .dhx_cal_navline
+        .dhx_cal_prev_button  
+        .dhx_cal_next_button  
+        .dhx_cal_today_button
+        .dhx_cal_date
+        .dhx_cal_tab(name='day_tab', style='right:204px;')
+        .dhx_cal_tab(name='week_tab', style='right:140px;')
+        .dhx_cal_tab(name='month_tab', style='right:76px;')
+      .dhx_cal_header
+      .dhx_cal_data        

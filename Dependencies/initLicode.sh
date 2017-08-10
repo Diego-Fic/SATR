@@ -26,7 +26,7 @@ cd $ROOT/erizo_controller
 ./initErizo_controller.sh
 ./initErizo_agent.sh
 
-cp -fv $ROOT/erizo_controller/erizoClient/dist/erizo.js $APPROOT/
+cp -fv $ROOT/erizo_controller/erizoClient/dist/erizo.js $APPROOT/App/Public/js
 cp -fv $ROOT/nuve/nuveClient/dist/nuve.js $APPROOT/
 
 echo [licode] Done.

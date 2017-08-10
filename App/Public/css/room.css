@@ -1,0 +1,156 @@
+body {
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+}
+
+body > button{
+    position: absolute;
+    display: none;
+    top: 0%;
+    left: 0%;
+}
+
+#share-screen{
+    position: absolute;
+    z-index: 999;
+    top: 50%;
+    left: 30%;
+}
+
+#start-rec{
+    position: absolute;
+    top: 36%;
+    left: 65%;
+}
+
+#main{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+
+#d-right{
+    height: 100%;
+    width: 36%;
+    float: right;
+    margin-top: 10px;
+}
+
+#video-teacher {
+
+    position: absolute;
+    width: 17%;
+    background-color: green;
+    height: 180px;
+    margin-bottom: 10px; 
+    border: 3px solid #73AD21;  
+}
+
+#video-teacher2 {
+
+    position: relative;
+    width: 50%;    
+    background-color: #710C47;
+    height: 180px;
+    margin-bottom: 10px;
+    margin-left: auto;  
+    border: 3px solid #73AD21;       
+}
+
+#screen-teacher{
+    position: relative;
+    background: #008000 none repeat scroll 0% 0%;
+    width: 63%;
+    height: 500px;
+    margin-top: 10px;
+    border: 3px solid #73AD21;
+}
+#screen-teacher button {
+    z-index: 999;
+    top: 258px;
+    left: 330px;
+    float: left;
+    position: relative;
+}
+
+#video-student{
+    background: #008000 none repeat scroll 0% 0%;
+    width: 100%;
+    position: relative;
+    height: 76px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#video-student > div{
+    position: relative;
+    background: red;
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+}
+
+.sname{
+    position: relative;
+    display: block;
+    height: 20%;
+    background-color: orange;
+    width: 100%;
+    top: -19%;
+    text-align: center;
+}
+
+.sframe{
+    position: relative;
+    height: 80%;
+    display: block;
+    background-color: blue;
+    width: 100%;
+}
+
+#wrapper {
+    position: relative;
+    background: #EBF4FB none repeat scroll 0% 0%;
+    border: 1px solid #ACD8F0;
+    width: 100%;
+    height: 300px;
+}
+
+#wrapper form {
+    margin-left: 10px;
+    padding:0; }
+  
+#wrapper input {
+    font: 12px arial;
+    margin: 0px 1px 5px;}
+  
+
+#chatbox {
+    border: 1px solid #ACD8F0;
+    position: relative;
+    background: #FFF none repeat scroll 0% 0%;
+    text-align: left;
+    padding: 10px;
+    margin: 10px;
+    overflow: auto;
+    height: 69%;
+}
+
+#chatbox div{
+    word-wrap: break-word;
+    font: 12px arial;
+    max-height: 100%;
+}
+  
+#usermsg {
+    border: 1px solid #ACD8F0;
+    max-height: 15px;
+    width: 77%;
+}
+  
+#submit { width: 60px; }
+  
+.error { color: #ff0000; }

@@ -4,10 +4,10 @@ html(lang="es")
   head
     title SATR
     meta(charset="utf-8")
-    link(rel='stylesheet',href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
-    link(rel='stylesheet',href='/css/mi-css.css')    
-    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
-    script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')  
+    script(src='/js/bootstrap.min.js')       
+    script(src='/js/jquery.min.js')
+    link(rel='stylesheet',href='/css/mi-css.css') 
   body
     .navbar.navbar-inverse.navbar-static-top(role='navigation')
       .container
@@ -33,7 +33,7 @@ html(lang="es")
                 else 
                   if user.rol == 'Support'
                     li
-                      a(href='/admin/users') Users               
+                      a(href='/support/rooms') Rooms               
                     li
                       a(href='/logout') Logout                  
   .container

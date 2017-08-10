@@ -42,6 +42,40 @@
       margin: auto;
       width: 65%;
     }
-
+    /*CSS TEMPLATE ROOM.JADE*/
+    #Room{
+      background-color: #C0C0C0;
+    }
+    #Usuario{
+      position: relative;
+      float: left;
+      width: 200px;
+      height: 200px;
+      background-color: #f5f5f5;      
+      border: 1px solid black;
+      border-radius: 4px;
+      left: 3px;
+    }
+    #Pantalla{
+      position: relative;
+      background-color: #f5f5f5;
+      border: 1px solid black;
+      float: left;
+      width: 600px;
+      height: 530px;
+      border-radius: 4px;
+      left: 6px;   
+    }    
+    #Support{
+      position: relative;
+      float: left;
+      width: 200px;
+      height: 200px;
+      background-color: #f5f5f5;      
+      border: 1px solid black;      
+      border-radius: 4px;
+      left: 9px;
+      
+    }
 
 

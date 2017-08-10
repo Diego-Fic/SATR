@@ -11,6 +11,7 @@ exports.createUser = function(username,email,password,rol,response){
       username: username,
       password: password,
       email: email,
+      token: null,
 	  recoverPassword: null,
 	  recoverPasswordExpires: null,
 	  rol: rol
@@ -19,7 +20,6 @@ exports.createUser = function(username,email,password,rol,response){
     user.save(function(err){
     	if (err) {
     		response(null);
-    		console.log(err);
     	} else {
     		response(user);
     	};
@@ -36,6 +36,7 @@ exports.findAllUsers = function(response){
       };
     });
 };
+
 
 exports.Login = function(email, password, response){
       Users.findOne({email:email, password: password}, function(error, result){

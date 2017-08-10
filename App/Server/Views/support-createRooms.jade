@@ -1,0 +1,67 @@
+doctype html
+html(lang='en')
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='/css/bootstrap.min.css')
+    title Create Room
+    style.
+      .espacio{
+      margin-top:30px;
+      }     
+  body
+    .navbar.navbar-inverse.navbar-static-top(role='navigation')
+        .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='/') SATR
+          .collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.active
+              if user
+                li              
+                  if user.rol == 'Admin'              
+                    li
+                      a(href='/admin/users') Users
+                    li
+                      a(href='/admin/rooms') Rooms                
+                    li
+                      a(href='/logout') Logout
+                  else 
+                    if user.rol == 'Support'
+                      li
+                        a(href='/support/rooms') Rooms               
+                      li
+                        a(href='/logout') Logout                  
+    
+    .container
+      if messages.error
+        .alert.alert-danger
+          div= messages.error
+      if messages.info
+        .alert.alert-info
+          div= messages.info
+      if messages.success
+        .alert.alert-success
+          div= messages.success
+
+    .container 
+      .espacio
+        form.form-horizontal(method='POST')
+          fieldset
+            legend Create Room
+            .form-group
+              label.col-md-4.control-label(for='confirm') Name(Enter Email of Employee)
+              .col-md-4
+                input.form-control.input-md(name='name', type='text',  value=user.email,  readonly='true')
+            .form-group
+              label.col-md-4.control-label(for='confirm') Room Destination(Enter Email of Client)
+              .col-md-4
+                input.form-control.input-md(name='destination', type='text')             
+            .form-group
+              label.col-md-4.control-label(for='confirm')
+              .col-md-4
+                button.btn.btn-primary(type='submit') Create 

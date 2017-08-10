@@ -2,20 +2,23 @@ var mongoose = require('mongoose');
 var Rooms = mongoose.model('Rooms');
 var N = require('./../../../nuve');
 
-
-exports.createRooms = function(email, max, response){
-
+exports.createRooms = function(email,destination, response){
 
 	N.API.createRoom(email, function(rooms){
+/*		
+		N.API.createToken(rooms._id, email, 'presenter', function(token){
+			console.log('token habitacion:' + token);
+		});
+		N.API.createToken(rooms._id, destination, 'presenter', function(token){
+			console.log('token habitacion:' + token);
+*/
+			var room = new Rooms({
+				      id: rooms._id.toString(),
+				      name: email,
+				      destination: destination
+				    });	
 
-			console.log(rooms._id);
-		/*	var room = new Rooms({
-		      id: rooms._id,
-		      name: email,
-		      max: max
-		    });
-		*/
-		   /* room.save(function(err){
+		   	room.save(function(err){
 		    	if (err) {
 		    		response(null);
 		    		console.log(err);
@@ -23,29 +26,25 @@ exports.createRooms = function(email, max, response){
 		    		response(room);
 		    	};		    
 			});
-			*/
-	}, function(error){
-		console.log('Error: ',error);
-	});	
-
+	    });
+//	});	
 };
 
-exports.createRoomToken = function(id, email, response){
-
-	N.API.createToken(id, email, 'Admin', function(token){
-		response(token);
-	});
-};
-
-exports.deleteRoom = function(room, id, response){
+exports.deleteRoom = function(id){
 
 	N.API.deleteRoom(id, function(rooms){
 
-		room.delete();
-
-		response(rooms);
 	});
+};
 
+exports.findAllbyName = function(email, response){
+    Rooms.find({name:email},function(err, rooms){
+      if(err) {
+      	response(null);
+      } else {
+      	response(rooms);
+      };
+    });
 };
 
 exports.getRoombyName = function(email, response){
@@ -53,6 +52,19 @@ exports.getRoombyName = function(email, response){
 		response(result);
 	});
 }; 
+
+exports.getRoombyId = function(id, response){
+	Rooms.findOne({id:id}, function(error, result){
+		response(result);
+	});
+};
+
+exports.findRoombyId = function(roomId, response){
+	N.API.getRoom(roomId, function(resp) {
+	  var room= JSON.parse(resp);
+	  response(room);
+	});
+};
 
 exports.findAllRooms = function(response){
     Rooms.find(function(err, rooms){

@@ -37,6 +37,17 @@ exports.sendMailConfirmation = function(email, response){
 	smtTransports.sendMail(mailOptions);
 };
 
+exports.sendRoomConfirmation = function(email,token, response){
+	var mailOptions = {
+		to: email,
+		from: 'satrrecovery@gmail.com',
+		subject: 'SATR Password Recovery',
+		text:'Hello,\n' + 'Hello, then you have the link for the technical service conference:\n\n' +
+		'http://localhost:8000/room/' + token +'\n' 
+	};
+
+	smtTransports.sendMail(mailOptions);
+};
 
 
 

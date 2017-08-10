@@ -5,6 +5,7 @@ var usersSchema = new Schema({
    username: { type: String},
    password: { type: Number },
    email: {type: String},
+   token: {type: String},
    recoverPassword: {type: String},
    recoverPasswordExpires: {type: Date},
    rol: { type:String, enum: ['Admin','Support','Client']}},
