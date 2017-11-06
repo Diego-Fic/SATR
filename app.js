@@ -1,9 +1,7 @@
 /*Librerias empleadas*/
 
 var express = require('express'),
-    N = require('./nuve'),
     https = require("https"),
-    config = require('./../licode/licode_config'),
     http = require('http'),
     app = express(),
     stylus = require('stylus'),
@@ -18,15 +16,17 @@ var express = require('express'),
     errorhandler = require('errorhandler'),
     morgan = require('morgan'),
     flash = require('express-flash');
+    fs = require('fs');
+    io = require("socket.io");
+    easyrtc = require("easyrtc");
 
 /*Configuración estandar*/
 app.locals.title = 'SATR';
 app.locals.moment = moment;
 app.locals.sprintf = sprintf.sprintf;
 app.locals.email = 'diegoderus@gmail.com'; 
-N.API.init(config.nuve.superserviceID, config.nuve.superserviceKey, 'http://localhost:3000/');
 process.env.TZ= 'Europe/Madrid';
-app.set('port', process.env.PROT || 8000);
+app.set('port', process.env.PORT || 8000);
 app.set('views',path.join(__dirname, '/App/Server/Views'));
 app.set('view engine','jade');
 app.use(bodyParser.json());
@@ -51,6 +51,8 @@ mongoose.connect('mongodb://localhost/Aplicacion', function(err, res){
     console.log('ERROR: Conectando a la Base de Datos'+ err);
   }
 });
+
+/*Añadimos las rutas*/
 require('./App/Server/Database/Users')(app);
 require('./App/Server/Database/Rooms')(app);
 require('./App/Server/Database/Events')(app);
@@ -58,22 +60,109 @@ require('./App/Server/Database/Tokens')(app);
 
 /*Rutas*/
 require('./App/Server/Routing/Gestion_Usuarios')(app);
-//require('./App/Server/')(app);
 
-//app.get('*',function(req,res){res.render('default')});
+app.get('*',function(req,res){res.render('default')});
+
+/*Vaciado de salas de la BD*/
+var Rooms= require('./App/Server/Database/Rooms_Management');
+Rooms.deleteAllRooms();
+var Eventos = require('./App/Server/Database/Events_Management');
+Eventos.deleteAllEvents();
+var TokenBD = require('./App/Server/Database/Tokens_Management');
+TokenBD.deleteAllTokens();
 
 
+/*
 app.get('/getRooms/', function (req, res) {
     "use strict";
-    N.API.getRooms(function (rooms) {
-        res.send(rooms);
-    //N.API.deleteRoom('598a066546026e0ca14e0988');
-    });
+
+    aplicacion.getRoomNames( function(err, roomNames) {
+            if (err) return;
+            console.log("Current Room Names: ", roomNames);
+            res.send(roomNames);
+        }
+    );
+
 });
 
+app.get('/deleteRooms/', function (req, res) {
+    "use strict";
+
+    aplicacion.deleteRoom("myRoomName", function(err, roomNames) {
+            if (err) return;
+            console.log("Delete room ");
+            res.send(roomNames);
+        }
+    );
+
+});
+
+app.get('/setRooms/', function (req, res) {
+    "use strict";
+    aplicacion.createRoom("myRoomName", null, function(err, roomObj) {
+        if (err) throw err;
+        console.log("Room " + roomObj.getRoomName() + " has been created.");
+        res.send(roomObj);
+    });
+});
+*/
 
 /*Servidor*/
+
+/*
 var server = http.createServer(
 	app).listen(app.get('port'),function(){
 	console.log("El servidor esta escuchando en el puerto: " + app.get('port'));
 });
+*/
+
+/*
+const PORT = 8443;
+    
+
+var server = https.createServer({
+    key: fs.readFileSync('Certs/localhost/micert.key'),
+    cert: fs.readFileSync('Certs/localhost/cert.crt')
+}, app).listen(PORT, '192.168.1.132',function(){
+    console.log("El servidor esta escuchando en el puerto:" + PORT);
+});
+*/
+  
+const PORT = 8443;
+    
+
+var server = https.createServer({
+    key: fs.readFileSync('Certs/localhost/micert.key'),
+    cert: fs.readFileSync('Certs/localhost/cert.crt')
+}, app).listen(PORT,function(){
+    console.log("El servidor esta escuchando en el puerto:" + PORT);
+});    
+
+// Start Socket.io so it attaches itself to Express server
+var socketServer = io.listen(server, {"log level":1});
+
+// Start EasyRTC server
+var aplicacion;
+
+
+easyrtc.listen(app, socketServer,null,function(err,rtc){
+    if (err) throw err;
+    rtc.createApp("myApp", null, function(err, appObj){
+        if (err) throw err;
+
+        aplicacion = appObj;
+        exports.aplicacion= aplicacion;
+        /*
+        appObj.createRoom("myRoomName", null, function(err, roomObj) {
+            if (err) throw err;
+            console.log("Room" + roomObj.getRoomName() + " has been created.");
+        });
+        appObj.getRoomNames(function(callback){
+            console.log(callback;
+        });
+        */
+    });
+});
+
+
+

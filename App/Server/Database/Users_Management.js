@@ -11,7 +11,7 @@ exports.createUser = function(username,email,password,rol,response){
       username: username,
       password: password,
       email: email,
-      token: null,
+      //token: null,
 	  recoverPassword: null,
 	  recoverPasswordExpires: null,
 	  rol: rol

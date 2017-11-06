@@ -1,19 +1,18 @@
 var mongoose = require('mongoose');
 var Rooms = mongoose.model('Rooms');
-var N = require('./../../../nuve');
+var easyrtc = require('./../../../app');
+var crypto = require('crypto');
 
 exports.createRooms = function(email,destination, response){
 
-	N.API.createRoom(email, function(rooms){
-/*		
-		N.API.createToken(rooms._id, email, 'presenter', function(token){
-			console.log('token habitacion:' + token);
-		});
-		N.API.createToken(rooms._id, destination, 'presenter', function(token){
-			console.log('token habitacion:' + token);
-*/
+var clave = crypto.randomBytes(8).toString('hex');
+
+	easyrtc.aplicacion.createRoom(clave, null, function(err, roomObj) {
+        if (err) throw err;
+        console.log("Room " + roomObj.getRoomName() + " has been created.");
+
 			var room = new Rooms({
-				      id: rooms._id.toString(),
+				      id: clave,
 				      name: email,
 				      destination: destination
 				    });	
@@ -30,10 +29,17 @@ exports.createRooms = function(email,destination, response){
 //	});	
 };
 
+exports.deleteAllRooms = function(){
+
+	Rooms.remove({}, function(err,removed){
+		console.log(removed);	
+	});
+};
+
 exports.deleteRoom = function(id){
 
-	N.API.deleteRoom(id, function(rooms){
-
+	easyrtc.aplicacion.deleteRoom(id, function(err, roomNames) {
+		 if (err) return;
 	});
 };
 
@@ -56,13 +62,6 @@ exports.getRoombyName = function(email, response){
 exports.getRoombyId = function(id, response){
 	Rooms.findOne({id:id}, function(error, result){
 		response(result);
-	});
-};
-
-exports.findRoombyId = function(roomId, response){
-	N.API.getRoom(roomId, function(resp) {
-	  var room= JSON.parse(resp);
-	  response(room);
 	});
 };
 

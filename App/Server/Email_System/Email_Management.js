@@ -41,8 +41,8 @@ exports.sendRoomConfirmation = function(email,token, response){
 	var mailOptions = {
 		to: email,
 		from: 'satrrecovery@gmail.com',
-		subject: 'SATR Password Recovery',
-		text:'Hello,\n' + 'Hello, then you have the link for the technical service conference:\n\n' +
+		subject: 'SATR Room Confirmation',
+		text:'Hello,\n' + 'Then you have the link for the technical service conference:\n\n' +
 		'http://localhost:8000/room/' + token +'\n' 
 	};
 

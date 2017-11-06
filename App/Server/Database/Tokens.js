@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
     Schema = mongoose.Schema;
 
 var tokensSchema = new Schema({
-   email: { type: String},	
-   token: { type: String},
+   email: { type: String},
    room: { type: String}},
    {collection : 'Tokens'}
 );

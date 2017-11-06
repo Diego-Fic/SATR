@@ -3,7 +3,7 @@ html(lang='en')
   head
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', type='text/css', href='/css/bootstrap.min.css')
-    script(src='/js/jquery.min.js')
+    script(type='text/javascript',src='/js/jquery-1.11.3.min.js')
     title Admin Room  
     style.
       #create{
@@ -61,7 +61,7 @@ html(lang='en')
       table.table#myTable
         thead
           tr
-            th(onclick='sortTable(0)') Romm ID
+            th(onclick='sortTable(0)') Room ID
             th(onclick='sortTable(1)') Name
             th(onclick='sortTable(2)') Destination Room             
             th(style='width: 30px;')

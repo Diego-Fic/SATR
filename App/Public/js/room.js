@@ -1,144 +1,275 @@
+/*
 $(document).ready(function(){
     
-    var tokenJ = $('meta[name=token]').attr("content");
-    var client = $('meta[name=client]').attr("content");
-    var support = $('meta[name=support]').attr("content");
-    var rol = $('meta[name=rol]').attr("content");
+    var to = $('meta[name=token]').attr("content");
+    var em = $('meta[name=email]').attr("content");
+    var ro = $('meta[name=rol]').attr("content");
 
-    //console.log('CLIENT: ' + client);
-    //console.log('Client2: ' + client2);
-    var mute = true;
-    var conn = 0;
-    var room = Erizo.Room({token: 'eyJ0b2tlbklkIjoiNTk3OGU0MDk0OTY2M2QzMmEwYThiMmFhIiwiaG9zdCI6IjEwLjAuMi4xNTo4MDgwIiwic2VjdXJlIjpmYWxzZSwic2lnbmF0dXJlIjoiTkdRME1XSmtZelUzWlRZME4yRTVNVEUxWmpjNFpqSXhNVGhpTnpJNE1XRmlaakZrWlRoak53PT0ifQ=='});
-    
-    var localStream = Erizo.Stream({video:true, audio: true, data:true, videoSize:[240, 180, 240, 180],
-attributes:{client:client, support:support, rol:rol}});
+    console.log('Token:' + to);
+    console.log('Email:' + em);
+    console.log('Rol:' + ro);
 
-    localStream.init();
-
-    localStream.addEventListener('access-accepted', function() {
-        console.log("Access to webcam and/or microphone granted");
-        localStream.stream.getAudioTracks()[0].enabled = !mute;
-        if(conn) room.publish(localStream, {maxVideoBW: 100});
-    });
-
-    localStream.addEventListener('access-denied', function(event) {
-      console.log("Access to webcam and/or microphone rejected");
-    });
-
-    $('body > button').click(function(){
-        window.location='/';
-    });
-
-
-    $('#message').submit(function(e){
-        if(localStream){
-            if(rol == undefined){
-                e.preventDefault();
-                var $c = $('#usermsg');
-                var m = $c.val();
-                $c.val('');
-                $c.focus();
-                $c = $('#chatbox');
-                $c.append($('<div>'));
-                $c.find('div').last().html('<p class="'+ destination +'"><b>' + destination + ': </b>' + m + '</p>');
-                $c.animate({scrollTop: 0xfffffff});
-                localStream.sendData({text: m, destination: destination, type:'message'});
-            }else {
-                e.preventDefault();
-                var $c = $('#usermsg');
-                var m = $c.val();
-                $c.val('');
-                $c.focus();
-                $c = $('#chatbox');
-                $c.append($('<div>'));
-                $c.find('div').last().html('<p class="'+ destination +'"><b>' + destination + ': </b>' + m + '</p>');
-                $c.animate({scrollTop: 0xfffffff});
-                localStream.sendData({text: m, destination: destination, type:'message'});
-            }
-        }    
-    });
-
-    var subscribeToStreams = function (streams) {
-        for (var i = 0; i < streams.length; i++) {
-            var stream = streams[i];
-            if (localStream.getID() !== stream.getID()) {
-                room.subscribe(stream);
-            }
-        }
-    };
-
-    room.addEventListener("room-connected", function (roomEvent) {
-        conn=1;
-        console.log('in the room');
-        console.log(localStream.hasData());
-        subscribeToStreams(roomEvent.streams);
-    });
-
-     room.addEventListener("stream-subscribed", function(streamEvent) {
-        console.log('stream subscribed');
-        var stream = streamEvent.stream;
-        var attributes = stream.getAttributes();
-        console.log(attributes);
-        stream.addEventListener("stream-data", function(evt){
-            if(evt.msg.type == 'COMM'){
-                console.log('toggledddd');
-                if(evt.msg.nick == nick){
-                    console.log('sound toggled', mute);
-                    mute = !mute;
-                    localStream.stream.getAudioTracks()[0].enabled = !mute;
-                }
-            }else{
-                var $c = $('#chatbox').append($('<div>'));
-                $c.find('div').last().html('<p><b>' + evt.msg.nick + ': </b>' + evt.msg.text + '</p>');
-            }
-        });
-        if(attributes.role == undefined){
-            if(attributes.media == 'screen'){
-                stream.show('screen-teacher')
-            }
-            else{
-                stream.show('video-teacher');
-            }
-        }else {
-            $('#video-student').append($('<div>'));
-            $('#video-student > div').last().append($('<div>').attr({'id': stream.getID().toString(), 'class': "sframe"}));
-            $('#video-student > div').last().append($('<p>').attr('class', "sname").html(attributes.nick));
-            stream.show(stream.getID().toString());
-        }
-    });
-
-    room.addEventListener("stream-added", function (streamEvent) {
-        console.log('added stream');
-        var streams = [];
-        streams.push(streamEvent.stream);
-        subscribeToStreams(streams);
-    });
-
-
-
-    room.addEventListener("stream-removed", function (streamEvent) {
-        // Remove stream from DOM
-        var stream = streamEvent.stream;
-        var attributes = stream.getAttributes();
-        console.log(attributes);
-        if (attributes.role == 'teacher'){
-            if((attributes.media == 'screen')){
-                $('#screen-teacher').empty();
-            }else{
-                $('#main').empty();
-                $('body > button').show();
-            }
-        }else if (stream.elementID !== undefined) {
-            $('#' + stream.elementID.toString()).parent().remove();
-        }
-    });
-
-    room.addEventListener("stream-failed", function (){
-    console.log("STREAM FAILED, DISCONNECTION");
-    room.disconnect();
-
-    });
-
-    room.connect();
 });    
+*/
+
+var to = $('meta[name=token]').attr("content");
+var em = $('meta[name=email]').attr("content");
+var ro = $('meta[name=rol]').attr("content");
+/*
+    console.log('Token:' + to);
+    console.log('Email:' + em);
+    console.log('Rol:' + ro);
+*/
+
+var selfEasyrtcid = "";
+var connectList = {};
+var channelIsActive = {}; // tracks which channels are active
+
+//var haveSelfVideo = false;
+var otherEasyrtcid = null; 
+ 
+function connect() {
+  //easyrtc.enableDebug(false);
+  easyrtc.enableDataChannels(true);
+  //easyrtc.enableVideo(false);
+  //easyrtc.enableAudio(false);
+  //easyrtc.enableVideoReceive(false);
+  //easyrtc.enableAudioReceive(false);
+  easyrtc.setDataChannelOpenListener(openListener);
+  easyrtc.setDataChannelCloseListener(closeListener);
+  easyrtc.setPeerListener(addToConversation);
+  easyrtc.setRoomOccupantListener(convertListToButtons);
+  easyrtc.joinRoom(to,null,null,null);
+  easyrtc.connect("easyrtc.dataMessaging", loginSuccess, loginFailure);
+  //easyrtc.setAutoInitUserMedia(false);
+  
+
+
+      easyrtc.getVideoSourceList(function(videoSrcList) {
+            for (var i = 0; i < videoSrcList.length; i++) {
+                var videoEle = videoSrcList[i];
+                var videoLabel = (videoSrcList[i].label && videoSrcList[i].label.length > 0) ?
+                        (videoSrcList[i].label) : ("src_" + i);
+                easyrtc.setVideoSource(videoSrcList[i].deviceId);
+                easyrtc.initMediaSource(
+                    function(stream) {
+                        var labelBlock = addMediaStreamToDiv("video-teacher2", stream, videoLabel, true);
+                        if (otherEasyrtcid) {
+                            easyrtc.addStreamToCall(otherEasyrtcid, videoLabel);
+                        }
+                    },
+                    function(errCode, errText) {
+                        easyrtc.showError(errCode, errText);
+                    }, videoLabel);
+            }
+      });
+
+    if (ro=="Client") {
+        var streamName = "screen";
+        easyrtc.initDesktopStream(
+                function(stream) {
+                    var labelBlock = addMediaStreamToScreen("screen-teacher", stream, streamName, true);
+                    if (otherEasyrtcid) {
+                        easyrtc.addStreamToCall(otherEasyrtcid, streamName);
+                    }
+                },
+                function(errCode, errText) {
+                    easyrtc.showError(errCode, errText);
+                },
+                streamName);
+    }
+}
+ 
+ 
+//SCREEN
+function createLabelledButton(buttonLabel) {
+    var button = document.createElement("button");
+    button.appendChild(document.createTextNode(buttonLabel));
+    document.getElementById("screen-teacher").appendChild(button);
+    return button;
+}
+
+function addMediaStreamToScreen(divId, stream, streamName, isLocal)
+{
+    var video = document.createElement("video");
+    video.width = 635;
+    video.height = 492;
+    //video.muted = isLocal; //muterar audio
+    video.style.verticalAlign = "middle";
+    document.getElementById(divId).appendChild(video);
+    video.autoplay = true;
+    easyrtc.setVideoObjectSrc(video, stream);
+}
+
+function addMediaStreamToDiv(divId, stream, streamName, isLocal)
+{
+    var video = document.createElement("video");
+    video.width = 183;
+    video.height = 186;
+    video.muted = isLocal; //muterar audio
+    //video.style.verticalAlign = "middle";
+    document.getElementById(divId).appendChild(video);
+    video.autoplay = true;
+    easyrtc.setVideoObjectSrc(video, stream);
+}
+
+//CHAT
+function addToConversation(who, msgType, content) {
+  // Escape html special characters, then add linefeeds.
+  content = content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  content = content.replace(/\n/g, "<br />");
+  if (who=="Me"){
+    document.getElementById("conversation").innerHTML +=
+      "<b>" + who + ":</b>&nbsp;" + content + "<br />";
+  } else {
+    document.getElementById("conversation").innerHTML +=
+      "<b>" + "Other" + ":</b>&nbsp;" + content + "<br />";
+  }    
+}
+ 
+ 
+function openListener(otherParty) {
+  channelIsActive[otherParty] = true;
+  updateButtonState(otherParty);
+}
+ 
+ 
+function closeListener(otherParty) {
+  channelIsActive[otherParty] = false;
+  updateButtonState(otherParty);
+}
+ 
+function convertListToButtons(roomName, occupantList, isPrimary) {
+  connectList = occupantList;
+ 
+  var otherClientDiv = document.getElementById("otherClients");
+  while (otherClientDiv.hasChildNodes()) {
+    otherClientDiv.removeChild(otherClientDiv.lastChild);
+  }
+ 
+  var label, button;
+
+
+  for (var easyrtcid in connectList) {
+  
+        var rowGroup = document.createElement("span");
+        //var rowLabel = document.createTextNode(easyrtc.idToName(easyrtcid));
+        var rowLabel = document.createTextNode("All Ready ");
+        
+        rowGroup.appendChild(rowLabel);
+     
+        button = document.createElement("button");
+        button.id = "connect_" + easyrtcid;
+        button.onclick = function(easyrtcid) {
+          return function() {
+            startCall(easyrtcid);
+          };
+        }(easyrtcid);
+        label = document.createTextNode("Connect");
+        button.appendChild(label);
+        rowGroup.appendChild(button);
+     
+        button = document.createElement("button");
+        button.id = "send_" + easyrtcid;
+        button.onclick = function(easyrtcid) {
+          return function() {
+            sendStuffP2P(easyrtcid);
+          };
+        }(easyrtcid);
+        label = document.createTextNode("Send Message");
+        button.appendChild(label);
+        rowGroup.appendChild(button);
+        otherClientDiv.appendChild(rowGroup);
+        updateButtonState(easyrtcid);
+    }
+   
+  
+  if (!otherClientDiv.hasChildNodes()) {
+    otherClientDiv.innerHTML = "<em>Nobody else logged in to talk to...</em>";
+  }
+}
+ 
+function updateButtonState(otherEasyrtcid) {
+  var isConnected = channelIsActive[otherEasyrtcid];
+  if(document.getElementById("connect_" + otherEasyrtcid)) {
+    document.getElementById("connect_" + otherEasyrtcid).disabled = isConnected;
+  }
+  if( document.getElementById("send_" + otherEasyrtcid)) {
+    document.getElementById("send_" + otherEasyrtcid).disabled = !isConnected;
+  }
+}
+ 
+ 
+function startCall(otherEasyrtcid) {
+  if (easyrtc.getConnectStatus(otherEasyrtcid) === easyrtc.NOT_CONNECTED) {
+    try {
+    easyrtc.call(otherEasyrtcid,
+        function(caller, media) { // success callback
+          if (media === "datachannel") {
+            // console.log("made call succesfully");
+            connectList[otherEasyrtcid] = true;
+          }
+        },
+        function(errorCode, errorText) {
+          connectList[otherEasyrtcid] = false;
+          easyrtc.showError(errorCode, errorText);
+        },
+        function(wasAccepted) {
+          // console.log("was accepted=" + wasAccepted);
+        }
+    );
+    }catch( callerror) {
+      console.log("saw call error ", callerror);
+    }
+  }
+  else {
+    easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(otherEasyrtcid));
+  }
+}
+ 
+function sendStuffP2P(otherEasyrtcid) {
+  var text = document.getElementById("sendMessageText").value;
+  if (text.replace(/\s/g, "").length === 0) { // Don"t send just whitespace
+    return;
+  }
+  if (easyrtc.getConnectStatus(otherEasyrtcid) === easyrtc.IS_CONNECTED) {
+    easyrtc.sendDataP2P(otherEasyrtcid, "msg", text);
+  }
+  else {
+    easyrtc.showError("NOT-CONNECTED", "not connected to " + easyrtc.idToName(otherEasyrtcid) + " yet.");
+  }
+ 
+  addToConversation("Me", "msgtype", text);
+  document.getElementById("sendMessageText").value = "";
+}
+ 
+ 
+function loginSuccess(easyrtcid) {
+  selfEasyrtcid = easyrtcid;
+  document.getElementById("iam").innerHTML = "I am " + ro;
+}
+  
+function loginFailure(errorCode, message) {
+  easyrtc.showError(errorCode, "failure to login");
+}
+
+easyrtc.setStreamAcceptor(function(easyrtcid, stream, streamName) {
+    if (streamName=="screen"){
+        var labelBlock = addMediaStreamToScreen("screen-teacher", stream, streamName, false);
+    } else {
+        var labelBlock = addMediaStreamToDiv("video-teacher", stream, streamName, false);
+    }
+    /*
+    console.log("ID: " + easyrtcid);
+    console.log("Stream: " + stream);
+    console.log("Stream: " + streamName);
+    */
+});
+
+easyrtc.setAcceptChecker(function(easyrtcid, callback) {
+    otherEasyrtcid = easyrtcid;
+    if (easyrtc.getConnectionCount() > 0) {
+        easyrtc.hangupAll();
+    }
+    callback(true, easyrtc.getLocalMediaIds());
+});

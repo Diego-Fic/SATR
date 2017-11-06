@@ -1,4 +1,3 @@
-var N = require('./../../../nuve');
 var Administrar = require('../Database/Users_Management');
 var Habitaciones = require('../Database/Rooms_Management');
 var Email = require('../Email_System/Email_Management');
@@ -135,11 +134,16 @@ app.post('/support/rooms/create-rooms',function(req, res){
         if(usuario){
           Habitaciones.createRooms(req.body.name, req.body.destination, function(response){
             if(response != null){
-              console.log(fecha);
               Eventos.createEvent(req.session.user.email, req.body.destination, conversor.changeDateInserted(new Date(),1), conversor.changeDateInserted(new Date(),0), function(response){
               });
+              TokenDB.createToken(req.body.name,response.id,function(response){});
+              TokenDB.createToken(req.body.destination,response.id,function(response){});
+              //enviar mensaje
+              Email.sendRoomConfirmation(req.body.destination,response.id, response);  
+              
               req.flash('success', 'Room created successfully.');
-              res.redirect('/support/rooms/create-rooms');            
+              res.redirect('/support/rooms/create-rooms');  
+              //crear tokens          
             } else {
               req.flash('error', 'An error was ocurred.');
               res.redirect('/support/rooms/create-rooms');                        
@@ -187,7 +191,7 @@ app.post('/support/rooms/edit/:token',function(req, res){
             });
 
           });
-
+          //crear nuevos tokens
           req.flash('success', 'Success! Changes has been saved.');
           res.redirect('/support/rooms');
         });
@@ -400,6 +404,8 @@ app.post('/admin/rooms/create-rooms',function(req, res){
                 });
                 TokenDB.createToken(req.body.name,response.id,function(response){});
                 TokenDB.createToken(req.body.destination,response.id,function(response){});
+                //enviar mensaje
+                Email.sendRoomConfirmation(req.body.destination,response.id, response);  
                 req.flash('success', 'Room created successfully.');
                 res.redirect('/admin/rooms/create-rooms');            
               } else {
@@ -407,7 +413,7 @@ app.post('/admin/rooms/create-rooms',function(req, res){
                 res.redirect('/admin/rooms/create-rooms');                        
               }
             });
-            //enviar mensaje             
+
           } else {         
             req.flash('error', 'There is no employee with that email.');
             res.redirect('/admin/rooms/create-rooms');
@@ -457,6 +463,7 @@ app.post('/admin/rooms/edit/:token',function(req, res){
 
           });
 
+          //crear nuevos tokens
           req.flash('success', 'Success! Changes has been saved.');
           res.redirect('/admin/rooms');
         });
@@ -471,7 +478,7 @@ app.post('/admin/rooms/delete/:token',function(req, res){
   } else {
     Habitaciones.getRoombyName(req.params.token, function(response){  
 
-
+      console.log("Room deleted: " + response.id);
       Habitaciones.deleteRoom(response.id);
       //console.log(response);
 
@@ -552,15 +559,34 @@ app.post('/change-password/:token', function(req, res){
 
 
 app.get('/room/:token',function(req, res){
-    if (req.session.user == null){
-      res.redirect('/');
+    if (req.session.user == undefined){
+      TokenDB.findTokenClient(req.params.token,function(response){
+        if (response!=null){
+          //console.log("ID: " + response.room);
+          //console.log("Email: " +response.email);
+        res.render('room3', {token:response.room , email:response.email , rol: "Client"});
+        TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
+        } else {res.redirect('/');}
+      });
     }
     else {
-      Habitaciones.findRoombyId(req.params.token ,function(response){
-        res.render('room', {token:response.token , client:response.destination , support:response.name , role: req.session.rol});
+      TokenDB.findToken(req.session.user.email,req.params.token,function(response){
+        if(response!=null){
+          //console.log("ID2: " + response.room.toString());
+          //console.log("Email2: " + response.email);
+        res.render('room3', {token:response.room , email:response.email, rol: "Admin"});
+        TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
+        } else {res.redirect('/admin/rooms');}
       });
     }
 });
+
+
+/*
+app.get('/room',function(req, res){
+  res.render('room3',{token:"", email:"response.email" , rol: "Cliente"});
+});
+*/
 
 };
 

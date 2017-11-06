@@ -21,6 +21,12 @@ exports.createEvent = function(username,text,start_date,end_date,response){
     });
 };
 
+exports.deleteAllEvents = function(){
+	Events.remove({}, function(err,removed){
+		console.log(removed);
+	});
+};
+
 exports.updateEvent = function(username,text,start_date,end_date,response){
 	Events.update({nameUser:username},{nameUser:username,text:text,start_date:start_date,end_date:end_date},function(data){
 		response(data);
