@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title SATR
+    meta(name='token', content='#{token}')
+    meta(name='email', content='#{email}')
+    meta(name='rol', content='#{rol}')
+    link(rel='stylesheet', type='text/css', href='/css/room.css')
+    script(type='text/javascript',src='/js/jquery-1.11.3.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(type='text/javascript', src='/js/easyrtc.js')
+    script(type='text/javascript', src='/js/desktop.js')
+    script(type='text/javascript', src='/js/room.js')
+  body(onload='connect()')
+    #main
+      #d-right
+        #video-teacher(autoplay='autoplay')
+        #video-teacher2(autoplay='autoplay')
+        #wrapper
+            #sendMessageArea
+              #iam Obtaining ID...
+              textarea#sendMessageText
+              #otherClients
+            #receiveMessageArea
+              | Received Messages:
+              #conversation        
+      #screen-teacher(autoplay='autoplay')      
+
+
