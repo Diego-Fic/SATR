@@ -14,7 +14,9 @@ La aplicación emplea las siguiente librerias:
 # Prerequisitos y Instalación
 
 Antes de instalar y probar la aplicación necesitamos realizar una serie de tareas:
-* Necesitamos un sistema operativo Ubuntu 14.04, a ser posible una instalación por defecto.
+* Necesitamos un sistema operativo Ubuntu 14.04, a ser posible una instalación por defecto. 
+* Disponer de un navegador Chrome, a ser posible con una versión anterior a la 56.
+* Instalar el plugin para Chrome https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk.
 * Instalar MongoDB con el comando "sudo apt-get install -y mongodb-org".
 * Debemos descargar la aplicación del repositorio (git clone https://github.com/Diego-Fic/SATR.git), cd SATR/ e instalar las dependencias mediante npm install. 
 * Por último creamos la base de datos ejecutando el archivo NoSQL.js mediante el comando mongo < MongodB/NoSQL.js.
