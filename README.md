@@ -14,7 +14,9 @@ La aplicación emplea las siguiente librerias:
 # Prerequisitos y Instalación
 
 Antes de instalar y probar la aplicación necesitamos realizar una serie de tareas:
-* Debemos descargar la aplicación del repositorio (git clone https://github.com/Diego-Fic/SATR.git) y instalar las dependencias mediante npm install. 
+* Necesitamos un sistema operativo Ubuntu 14.04, a ser posible una instalación por defecto.
+* Instalar MongoDB con el comando "sudo apt-get install -y mongodb-org".
+* Debemos descargar la aplicación del repositorio (git clone https://github.com/Diego-Fic/SATR.git), cd SATR/ e instalar las dependencias mediante npm install. 
 * Por último creamos la base de datos ejecutando el archivo NoSQL.js mediante el comando mongo < MongodB/NoSQL.js.
 
 Una vez hemos instalado las dependecias podemos ejecutar nuestra aplicación:
