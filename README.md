@@ -21,6 +21,6 @@ Antes de instalar y probar la aplicación necesitamos realizar una serie de tare
 * Debemos descargar la aplicación del repositorio (git clone https://github.com/Diego-Fic/SATR.git), cd SATR/ e instalar las dependencias mediante npm install. 
 * Por último creamos la base de datos ejecutando el archivo NoSQL.js mediante el comando mongo < MongodB/NoSQL.js.
 
-Una vez hemos instalado las dependecias podemos ejecutar nuestra aplicación:
+Una vez hemos instalado las dependencias podemos ejecutar nuestra aplicación:
 * Ejecutamos node SATR/app.js .
 * Iniciamos el navegador web en https://localhost:8443
