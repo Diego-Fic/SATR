@@ -179,6 +179,9 @@ app.post('/support/rooms/edit/:token',function(req, res){
       } else {
         Habitaciones.getRoombyName(req.params.token, function(response){
 
+          TokenDB.deleteToken(response.name,response.id,function(response){});
+          TokenDB.deleteToken(response.destination,response.id,function(response){});
+          
           Habitaciones.deleteRoom(response.id);
           response.remove();
 
@@ -190,6 +193,11 @@ app.post('/support/rooms/edit/:token',function(req, res){
             Eventos.createEvent(req.body.name, req.body.max, conversor.changeDateInserted(new Date(),1), conversor.changeDateInserted(new Date(),0), function(response){
             });
 
+            TokenDB.createToken(req.body.name,response.id,function(response){});
+            TokenDB.createToken(req.body.max,response.id,function(response){});
+            //enviar mensaje
+            Email.sendRoomConfirmation(req.body.max,response.id, response);  
+                  
           });
           //crear nuevos tokens
           req.flash('success', 'Success! Changes has been saved.');
@@ -449,6 +457,9 @@ app.post('/admin/rooms/edit/:token',function(req, res){
       } else {
         Habitaciones.getRoombyName(req.params.token, function(response){
 
+          TokenDB.deleteToken(response.name,response.id,function(response){});
+          TokenDB.deleteToken(response.destination,response.id,function(response){});
+
           Habitaciones.deleteRoom(response.id);
           
           response.remove();
@@ -461,6 +472,11 @@ app.post('/admin/rooms/edit/:token',function(req, res){
             Eventos.createEvent(req.body.name, req.body.max, conversor.changeDateInserted(new Date(),1), conversor.changeDateInserted(new Date(),0), function(response){
             });
 
+            TokenDB.createToken(req.body.name,response.id,function(response){});
+            TokenDB.createToken(req.body.max,response.id,function(response){});
+            //enviar mensaje
+            Email.sendRoomConfirmation(req.body.max,response.id, response);  
+                
           });
 
           //crear nuevos tokens
@@ -574,7 +590,7 @@ app.get('/room/:token',function(req, res){
         if(response!=null){
           //console.log("ID2: " + response.room.toString());
           //console.log("Email2: " + response.email);
-        res.render('room3', {token:response.room , email:response.email, rol: "Admin"});
+        res.render('room3', {token:response.room , email:response.email, rol: req.session.user.rol});
         TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
         } else {res.redirect('/admin/rooms');}
       });
