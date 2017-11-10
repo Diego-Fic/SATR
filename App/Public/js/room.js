@@ -263,7 +263,7 @@ easyrtc.setStreamAcceptor(function(easyrtcid, stream, streamName) {
     console.log("ID: " + easyrtcid);
     console.log("Stream: " + stream);
     console.log("Stream: " + streamName);
-    /*
+    */
 });
 
 easyrtc.setAcceptChecker(function(easyrtcid, callback) {
