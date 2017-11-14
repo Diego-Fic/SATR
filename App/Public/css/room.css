@@ -9,7 +9,7 @@
     border: 1px solid #ACD8F0;
     padding: 10px;
     margin: 10px;
-    height: 280px;
+    height: 600px;
 
 }
 
@@ -45,7 +45,7 @@
     position: relative;
     background: black none repeat scroll 0% 0%;
     width: 63%;
-    height: 490px;
+    height: 813px;
     margin-top: 10px;
     border: 3px solid #73AD21;
 }
@@ -64,5 +64,5 @@
     border: 1px solid black;
     border-radius: 4px;
     width: auto;
-    height: 180px;
+    height: 495px;
 }

@@ -92,8 +92,8 @@ function createLabelledButton(buttonLabel) {
 function addMediaStreamToScreen(divId, stream, streamName, isLocal)
 {
     var video = document.createElement("video");
-    video.width = 635;
-    video.height = 492;
+    video.width = 1158;
+    video.height = 820;
     //video.muted = isLocal; //muterar audio
     video.style.verticalAlign = "middle";
     document.getElementById(divId).appendChild(video);
@@ -104,8 +104,8 @@ function addMediaStreamToScreen(divId, stream, streamName, isLocal)
 function addMediaStreamToDiv(divId, stream, streamName, isLocal)
 {
     var video = document.createElement("video");
-    video.width = 183;
-    video.height = 186;
+    video.width = 335;
+    video.height = 180;
     video.muted = isLocal; //muterar audio
     //video.style.verticalAlign = "middle";
     document.getElementById(divId).appendChild(video);
@@ -183,7 +183,10 @@ function convertListToButtons(roomName, occupantList, isPrimary) {
         updateButtonState(easyrtcid);
     }
    
-  
+  if (ro = 'Client'){
+    document.getElementById("connect_" + easyrtcid).disabled = true;
+  }
+
   if (!otherClientDiv.hasChildNodes()) {
     otherClientDiv.innerHTML = "<em>Nobody else logged in to talk to...</em>";
   }
@@ -259,11 +262,11 @@ easyrtc.setStreamAcceptor(function(easyrtcid, stream, streamName) {
     } else {
         var labelBlock = addMediaStreamToDiv("video-teacher", stream, streamName, false);
     }
-    /*
+/*
     console.log("ID: " + easyrtcid);
     console.log("Stream: " + stream);
     console.log("Stream: " + streamName);
-    */
+*/
 });
 
 easyrtc.setAcceptChecker(function(easyrtcid, callback) {

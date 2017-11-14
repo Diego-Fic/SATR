@@ -581,7 +581,7 @@ app.get('/room/:token',function(req, res){
           //console.log("ID: " + response.room);
           //console.log("Email: " +response.email);
         res.render('room3', {token:response.room , email:response.email , rol: "Client"});
-        TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
+        //TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
         } else {res.redirect('/');}
       });
     }
@@ -591,7 +591,7 @@ app.get('/room/:token',function(req, res){
           //console.log("ID2: " + response.room.toString());
           //console.log("Email2: " + response.email);
         res.render('room3', {token:response.room , email:response.email, rol: req.session.user.rol});
-        TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
+        //TokenDB.deleteToken(response.email,response.room,function(token){token.remove();});
         } else {res.redirect('/admin/rooms');}
       });
     }
